@@ -38,11 +38,11 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return false if x.nil? || x == false }
     elsif !pmtr.nil? && (pmtr.is_a? Class)
-      my_each { |x| return false if x.class != pmtr }
+      my_each { |x| return false if x.instance_of(pmtr) }
     elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
       my_each { |x| return false unless pmtr.match(x) }
     else
-      my_each { |x| return false if x != pmtr }
+      my_each { |x| return false if x == pmtr }
     end
     true
   end
@@ -54,11 +54,11 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return true if x }
     elsif !pmtr.nil? && (pmtr.is_a? Class)
-      my_each { |x| return true if x.class == pmtr }
+      my_each { |x| return true if x.instance_of(pmtr) }
     elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
       my_each { |x| return true if pmtr.match(x) }
     else
-      my_each { |n| return true if x == pmtr}
+      my_each { |x| return true if x == pmtr }
     end
     false
   end
