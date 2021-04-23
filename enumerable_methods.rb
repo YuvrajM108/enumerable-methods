@@ -39,11 +39,11 @@ module Enumerable
       my_each { |x| return false if x.nil? || x == false }
     elsif !pmtr.nil? && (pmtr.is_a? Class)
       my_each { |x| return false if x.class != pmtr }
-    elsif !pmtr.nil? && pmtr.class == Regexp
+    elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
       my_each { |x| return false unless pmtr.match(x) }
     else
       my_each { |x| return false if x != pmtr }
     end
-    true  
+    true
   end
 end
