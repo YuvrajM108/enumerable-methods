@@ -46,4 +46,20 @@ module Enumerable
     end
     true
   end
+
+  def my_any?(pmtr = nil)
+    if block_given?
+      my_each { |value| return true if yield(value) }
+      false
+    elsif pmtr.nil?
+      my_each { |x| return true if x }
+    elsif !pmtr.nil? && (pmtr.is_a? Class)
+      my_each { |x| return true if x.class == pmtr }
+    elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
+      my_each { |x| return true if pmtr.match(x) }
+    else
+      my_each { |n| return true if x == pmtr}
+    end
+    false
+  end
 end
