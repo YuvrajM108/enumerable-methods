@@ -65,12 +65,12 @@ module Enumerable
 
   def my_none?(pmtr = nil)
     if !block_given? && pmtr.nil?
-      my_each { |x| return false if n }
+      my_each { |x| return false if x }
       return true
     end
 
     if !block_given? && !pmtr.nil?
-      if (pmtr.is_a? Class)
+      if pmtr.is_a? Class
         my_each { |x| return false if x.instance_of?(pmtr) }
         return true
       end
