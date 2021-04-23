@@ -62,4 +62,27 @@ module Enumerable
     end
     false
   end
+
+  def my_none?(pmtr = nil)
+    if !block_given? && pmtr.nil?
+      my_each { |x| return false if n }
+      return true
+    end
+
+    if !block_given? && !pmtr.nil?
+      if (pmtr.is_a? Class)
+        my_each { |x| return false if x.instance_of?(pmtr) }
+        return true
+      end
+      if pmtr.instance_of?(Regexp)
+        my_each { |x| return false if pmtr.match(x) }
+        return true
+      end
+      my_each { |x| return false if x == pmtr }
+      return true
+    end
+
+    my_any? { |value| return false if yield(value) }
+    true
+  end
 end
