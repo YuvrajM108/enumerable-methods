@@ -27,7 +27,23 @@ module Enumerable
     return to_enum(:my_select) unless block_given?
 
     arr = []
-    my_each { |element| arr << element if yield(element) }
+    my_each { |value| arr << value if yield(element) }
     arr
+  end
+
+  def my_all?(pmtr = nil)
+    if block_given?
+      my_each { |value| return false if yield(value) == false }
+      return true
+    elsif pmtr.nil?
+      my_each { |x| return false if x.nil? || x == false }
+    elsif !pmtr.nil? && (pmtr.is_a? Class)
+      my_each { |x| return false if x.class != pmtr }
+    elsif !pmtr.nil? && pmtr.class == Regexp
+      my_each { |x| return false unless pmtr.match(x) }
+    else
+      my_each { |x| return false if x != pmtr }
+    end
+    true  
   end
 end
