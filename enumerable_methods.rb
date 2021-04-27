@@ -85,20 +85,14 @@ module Enumerable
   end
 end
 
-
 def class_or_regexp?(value, test_value)
   if test_value.is_a? Class
-    if value.instance_of?(test_value)
-      return true
-    else
-      return false
-    end
-  elsif test_value.instance_of?(Regexp)
-    if test_value.match(value)
-      return true
-    else
-      return false
-    end
+    return true if value.instance_of?(test_value)
+    false
+  end
+  if test_value.instance_of?(Regexp)
+    return true if test_value.match(value)
+    false
   else
     false
   end
