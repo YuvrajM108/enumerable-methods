@@ -40,7 +40,7 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return false if x.nil? || x == false }
     elsif !pmtr.nil?
-      my_each { |x| return false if !class_or_regexp(x, pmtr) }
+      my_each { |x| return false unless class_or_regexp(x, pmtr) }
     else
       my_each { |x| return false if x == pmtr }
     end
@@ -88,12 +88,10 @@ end
 def class_or_regexp?(value, test_value)
   if test_value.is_a? Class
     return true if value.instance_of?(test_value)
-    
     false
   end
   if test_value.instance_of?(Regexp)
     return true if test_value.match(value)
-
     false
   end
   false
