@@ -29,7 +29,7 @@ module Enumerable
     return to_enum(:my_select) unless block_given?
 
     arr = []
-    my_each { |value| arr << value if yield(element) }
+    my_each { |value| arr << value if yield(value) }
     arr
   end
 
@@ -40,9 +40,9 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return false if nil_or_false?(x) }
     elsif !pmtr.nil?
-      my_each { |x| return false unless class_or_regexp(x, pmtr) }
+      my_each { |x| return false unless class_or_regexp?(x, pmtr) }
     else
-      my_each { |x| return false if x == pmtr }
+      my_each { |x| return false unless x == pmtr }
     end
     true
   end
@@ -68,12 +68,8 @@ module Enumerable
     end
 
     if !block_given? && !pmtr.nil?
-      if pmtr.is_a? Class
-        my_each { |x| return false if x.instance_of?(pmtr) }
-        return true
-      end
-      if pmtr.instance_of?(Regexp)
-        my_each { |x| return false if pmtr.match(x) }
+      if pmtr.is_a? Class || pmtr.instance_of?(Regexp)
+        my_each { |x| return false if class_or_regexp?(x, pmtr) }
         return true
       end
       my_each { |x| return false if x == pmtr }
@@ -82,6 +78,22 @@ module Enumerable
 
     my_any? { |value| return false if yield(value) }
     true
+  end
+
+  def my_count(pmtr = nil)
+    arr = []
+    unless self.instance_of?(Array)
+      arr = self.to_a
+    else
+      arr = self
+    end
+    if block_given? || pmtr
+      return arr.my_select { |x| x == pmtr }.length if pmtr
+
+      arr.my_select { |x| yield(x) }.length
+    else
+      arr.length
+    end
   end
 end
 
