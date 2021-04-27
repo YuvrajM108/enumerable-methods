@@ -38,7 +38,7 @@ module Enumerable
       my_each { |value| return false if yield(value) == false }
       return true
     elsif pmtr.nil?
-      my_each { |x| return false if nil_or_false(x) }
+      my_each { |x| return false if nil_or_false?(x) }
     elsif !pmtr.nil?
       my_each { |x| return false unless class_or_regexp(x, pmtr) }
     else
