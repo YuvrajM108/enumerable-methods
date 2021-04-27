@@ -1,3 +1,5 @@
+require 'pry'
+
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -37,10 +39,8 @@ module Enumerable
       return true
     elsif pmtr.nil?
       my_each { |x| return false if x.nil? || x == false }
-    elsif !pmtr.nil? && (pmtr.is_a? Class)
-      my_each { |x| return false if x.instance_of(pmtr) }
-    elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
-      my_each { |x| return false unless pmtr.match(x) }
+    elsif !pmtr.nil?
+      my_each { |x| return false if !class_or_regexp(x, pmtr) }
     else
       my_each { |x| return false if x == pmtr }
     end
@@ -53,10 +53,8 @@ module Enumerable
       false
     elsif pmtr.nil?
       my_each { |x| return true if x }
-    elsif !pmtr.nil? && (pmtr.is_a? Class)
-      my_each { |x| return true if x.instance_of(pmtr) }
-    elsif !pmtr.nil? && pmtr.instance_of?(Regexp)
-      my_each { |x| return true if pmtr.match(x) }
+    elsif !pmtr.nil?
+      my_each { |x| return true if class_or_regexp(x, pmtr) }
     else
       my_each { |x| return true if x == pmtr }
     end
@@ -84,5 +82,24 @@ module Enumerable
 
     my_any? { |value| return false if yield(value) }
     true
+  end
+end
+
+
+def class_or_regexp?(value, test_value)
+  if test_value.is_a? Class
+    if value.instance_of?(test_value)
+      return true
+    else
+      return false
+    end
+  elsif test_value.instance_of?(Regexp)
+    if test_value.match(value)
+      return true
+    else
+      return false
+    end
+  else
+    false
   end
 end
