@@ -82,9 +82,7 @@ module Enumerable
 
   def my_count(pmtr = nil)
     arr = self
-    unless arr.instance_of?(Array)
-      arr = arr.to_a
-    end
+    arr = arr.to_a unless arr.instance_of?(Array)
     if block_given? || pmtr
       return arr.my_select { |x| x == pmtr }.length if pmtr
 
