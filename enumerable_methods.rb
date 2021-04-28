@@ -103,6 +103,19 @@ module Enumerable
     end
     arr
   end
+
+  def my_inject(startval = nil, sym = nil)
+    if (!startval.nil? && sym.nil?) && (startval.is_a(Symbol) || startval.is_a(String))
+      sym = startval
+      startval = nil
+    end
+    if !block_given? && !sym.nil?
+      to_a.my_each { |x| startval = startval.nil? ? x : startval.send(sym, x) }
+    else
+      to_a.my_each { |x| startval = startval.nil? ? x : yield(startval, x) }
+    end
+    startval
+  end
 end
 
 def class_or_regexp?(value, test_value)
