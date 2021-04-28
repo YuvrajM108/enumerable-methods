@@ -91,6 +91,18 @@ module Enumerable
       arr.length
     end
   end
+
+  def my_map(proc = nil)
+    return to_enum unless block_given? || proc
+
+    arr = []
+    if proc
+      my_each { |x| arr << proc.call(x) }
+    else
+      my_each { |x| arr << yield(x) }
+    end
+    arr
+  end
 end
 
 def class_or_regexp?(value, test_value)
