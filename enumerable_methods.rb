@@ -1,5 +1,7 @@
 require 'pry'
 
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
@@ -54,7 +56,7 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return true if x }
     elsif !pmtr.nil?
-      my_each { |x| return true if class_or_regexp(x, pmtr) }
+      my_each { |x| return true if class_or_regexp?(x, pmtr) }
     else
       my_each { |x| return true if x == pmtr }
     end
@@ -68,7 +70,7 @@ module Enumerable
     end
 
     if !block_given? && !pmtr.nil?
-      if pmtr.is_a? Class || pmtr.instance_of?(Regexp)
+      if (pmtr.is_a? Class) || pmtr.instance_of?(Regexp)
         my_each { |x| return false if class_or_regexp?(x, pmtr) }
         return true
       end
@@ -105,7 +107,7 @@ module Enumerable
   end
 
   def my_inject(startval = nil, sym = nil)
-    if (!startval.nil? && sym.nil?) && (startval.is_a(Symbol) || startval.is_a(String))
+    if (!startval.nil? && sym.nil?) && (startval.is_a?(Symbol) || startval.is_a?(String))
       sym = startval
       startval = nil
     end
@@ -118,6 +120,8 @@ module Enumerable
   end
 end
 
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
 def multipy_els(n_arr)
   n_arr.my_inject(1, '*')
 end
@@ -128,7 +132,7 @@ def class_or_regexp?(value, test_value)
 
     false
   end
-  if test_value.instance_of?(Regexp)
+  if test_value.instance_of?(Regexp) && value.is_a?(String)
     return true if test_value.match(value)
 
     false
