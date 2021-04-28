@@ -80,13 +80,13 @@ module Enumerable
     true
   end
 
-  def my_count(pmtr = nil)
+  def my_count(pmtr = nil, &block)
     arr = self
     arr = arr.to_a unless arr.instance_of?(Array)
     if block_given? || pmtr
       return arr.my_select { |x| x == pmtr }.length if pmtr
 
-      arr.my_select { |x| yield(x) }.length
+      arr.my_select(&block).length
     else
       arr.length
     end
