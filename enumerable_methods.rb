@@ -118,6 +118,10 @@ module Enumerable
   end
 end
 
+def multipy_els(n_arr)
+  n_arr.my_inject(1, '*')
+end
+
 def class_or_regexp?(value, test_value)
   if test_value.is_a? Class
     return true if value.instance_of?(test_value)
