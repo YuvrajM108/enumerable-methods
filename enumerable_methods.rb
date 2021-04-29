@@ -27,7 +27,7 @@ module Enumerable
 
     i = 0
     while i < arr.length
-      yield(i)
+      yield(arr[i], i)
       i += 1
     end
     self
