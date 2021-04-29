@@ -8,8 +8,7 @@ module Enumerable
 
     arr = []
     arr = self if is_a?(Array)
-    arr = to_a if is_a?(Range)
-    arr = flatten if is_a?(Hash)
+    arr = my_to_a if is_a?(Range) || is_a?(Hash)
 
     i = 0
     while i < arr.length
@@ -34,9 +33,12 @@ module Enumerable
   def my_select
     return to_enum(:my_select) unless block_given?
 
-    arr = []
-    my_each { |value| arr << value if yield(value) }
-    arr
+    in_arr = self if is_a?(Array)
+    in_arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
+    out_arr = []
+    in_arr.my_each { |value| out_arr << value if yield(value) }
+    out_arr
   end
 
   def my_all?(pmtr = nil)
@@ -128,6 +130,13 @@ end
 
 def multipy_els(n_arr)
   n_arr.my_inject(1, '*')
+end
+
+def my_to_a()
+  conv_arr = []
+  conv_arr = to_a if is_a?(Range)
+  conv_arr = flatten if is_a?(Hash)
+  conv_arr
 end
 
 def class_or_regexp?(value, test_value)
