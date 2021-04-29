@@ -6,7 +6,11 @@ module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
-    arr = self
+    arr = []
+    arr = self if is_a?(Array)
+    arr = to_a if is_a?(Range)
+    arr = flatten if is_a?(Hash)
+
     i = 0
     while i < arr.length
       yield(arr[i])
