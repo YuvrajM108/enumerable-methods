@@ -119,13 +119,17 @@ module Enumerable
   def my_map(proc = nil)
     return to_enum unless block_given? || proc
 
-    arr = []
+    in_arr = []
+    in_arr = self if is_a?(Array)
+    in_arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
+    out_arr = []
     if proc
-      my_each { |x| arr << proc.call(x) }
+      in_arr.my_each { |x| out_arr << proc.call(x) }
     else
-      my_each { |x| arr << yield(x) }
+      in_arr.my_each { |x| out_arr << yield(x) }
     end
-    arr
+    out_arr
   end
 
   def my_inject(startval = nil, sym = nil)
