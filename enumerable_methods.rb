@@ -64,35 +64,43 @@ module Enumerable
   end
 
   def my_any?(pmtr = nil)
+    arr = []
+    arr = self if is_a?(Array)
+    arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
     if block_given?
-      my_each { |value| return true if yield(value) }
+      arr.my_each { |value| return true if yield(value) }
       false
     elsif pmtr.nil?
-      my_each { |x| return true if x }
+      arr.my_each { |x| return true if x }
     elsif !pmtr.nil?
-      my_each { |x| return true if class_and_regexp?(x, pmtr) }
+      arr.my_each { |x| return true if class_and_regexp?(x, pmtr) }
     else
-      my_each { |x| return true if x == pmtr }
+      arr.my_each { |x| return true if x == pmtr }
     end
     false
   end
 
   def my_none?(pmtr = nil)
+    arr = []
+    arr = self if is_a?(Array)
+    arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
     if !block_given? && pmtr.nil?
-      my_each { |x| return false if x }
+      arr.my_each { |x| return false if x }
       return true
     end
 
     if !block_given? && !pmtr.nil?
-      if (pmtr.is_a? Class) || pmtr.instance_of?(Regexp)
-        my_each { |x| return false if class_and_regexp?(x, pmtr) }
+      if (pmtr.is_a? Class) || pmtr.is_a?(Regexp) || pmtr.is_a?(String)
+        arr.my_each { |x| return false if class_and_regexp?(x, pmtr) }
         return true
       end
-      my_each { |x| return false if x == pmtr }
+      arr.my_each { |x| return false if x == pmtr }
       return true
     end
 
-    my_any? { |value| return false if yield(value) }
+    arr.my_any? { |value| return false if yield(value) }
     true
   end
 
