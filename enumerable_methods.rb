@@ -36,6 +36,7 @@ module Enumerable
   def my_select
     return to_enum(:my_select) unless block_given?
 
+    in_arr = []
     in_arr = self if is_a?(Array)
     in_arr = my_to_a if is_a?(Range) || is_a?(Hash)
 
@@ -45,15 +46,19 @@ module Enumerable
   end
 
   def my_all?(pmtr = nil)
+    arr = []
+    arr = self if is_a?(Array)
+    arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
     if block_given?
-      my_each { |value| return false if yield(value) == false }
+      arr.my_each { |value| return false if yield(value) == false || yield(value).nil? }
       return true
     elsif pmtr.nil?
-      my_each { |x| return false if nil_or_false?(x) }
+      arr.my_each { |x| return false if nil_or_false?(x) }
     elsif !pmtr.nil?
-      my_each { |x| return false unless class_or_regexp?(x, pmtr) }
+      arr.my_each { |x| return false unless class_or_regexp?(x, pmtr) }
     else
-      my_each { |x| return false unless x == pmtr }
+      arr.my_each { |x| return false unless x == pmtr }
     end
     true
   end
@@ -144,15 +149,22 @@ end
 
 def class_or_regexp?(value, test_value)
   if test_value.is_a? Class
-    return true if value.instance_of?(test_value)
+    return true if value.is_a?(test_value)
 
     false
   end
-  if test_value.instance_of?(Regexp) && value.is_a?(String)
-    return true if test_value.match(value)
+  if value.is_a?(String)
+    return true if test_value.is_a?(String) && test_value == value
+    return true if regexp_check?(value, test_value)
 
     false
   end
+  false
+end
+
+def regexp_check?(str, reg_val)
+  return true if reg_val.is_a?(Regexp) && reg_val.match(str)
+
   false
 end
 
