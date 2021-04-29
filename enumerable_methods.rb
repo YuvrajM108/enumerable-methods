@@ -56,7 +56,7 @@ module Enumerable
     elsif pmtr.nil?
       arr.my_each { |x| return false if nil_or_false?(x) }
     elsif !pmtr.nil?
-      arr.my_each { |x| return false unless class_or_regexp?(x, pmtr) }
+      arr.my_each { |x| return false unless class_and_regexp?(x, pmtr) }
     else
       arr.my_each { |x| return false unless x == pmtr }
     end
@@ -70,7 +70,7 @@ module Enumerable
     elsif pmtr.nil?
       my_each { |x| return true if x }
     elsif !pmtr.nil?
-      my_each { |x| return true if class_or_regexp?(x, pmtr) }
+      my_each { |x| return true if class_and_regexp?(x, pmtr) }
     else
       my_each { |x| return true if x == pmtr }
     end
@@ -85,7 +85,7 @@ module Enumerable
 
     if !block_given? && !pmtr.nil?
       if (pmtr.is_a? Class) || pmtr.instance_of?(Regexp)
-        my_each { |x| return false if class_or_regexp?(x, pmtr) }
+        my_each { |x| return false if class_and_regexp?(x, pmtr) }
         return true
       end
       my_each { |x| return false if x == pmtr }
@@ -147,18 +147,32 @@ def my_to_a()
   conv_arr
 end
 
-def class_or_regexp?(value, test_value)
+def class_and_regexp?(value, test_value)
+  return true if num_check?(value, test_value)
+
   if test_value.is_a? Class
     return true if value.is_a?(test_value)
 
     false
   end
   if value.is_a?(String)
-    return true if test_value.is_a?(String) && test_value == value
+    return true if string_check?(value, test_value)
     return true if regexp_check?(value, test_value)
 
     false
   end
+  false
+end
+
+def num_check?(num, num_comp)
+  return true if num.is_a?(Numeric) && num_comp.is_a?(Numeric) && num == num_comp
+
+  false
+end
+
+def string_check?(str, str_comp)
+  return true if str_comp.is_a?(String) && str_comp == str
+
   false
 end
 
