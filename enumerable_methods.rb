@@ -1,6 +1,6 @@
 require 'pry'
 
-# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength
 
 module Enumerable
   def my_each
@@ -21,7 +21,10 @@ module Enumerable
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
-    arr = self
+    arr = []
+    arr = self if is_a?(Array)
+    arr = my_to_a if is_a?(Range) || is_a?(Hash)
+
     i = 0
     while i < arr.length
       yield(i)
@@ -126,9 +129,9 @@ module Enumerable
   end
 end
 
-# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+# rubocop: enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength
 
-def multipy_els(n_arr)
+def multiply_els(n_arr)
   n_arr.my_inject(1, '*')
 end
 
