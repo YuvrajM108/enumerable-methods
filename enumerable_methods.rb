@@ -10,10 +10,20 @@ module Enumerable
     arr = self if is_a?(Array)
     arr = my_to_a if is_a?(Range) || is_a?(Hash)
 
-    i = 0
-    while i < arr.length
-      yield(arr[i])
-      i += 1
+    if is_a?(Hash)
+      hash = self
+      h_keys = keys
+      h = 0
+      while h < h_keys.length
+        yield(keys[h], hash[keys[h]])
+        h += 1
+      end
+    else
+      i = 0
+      while i < arr.length
+        yield(arr[i])
+        i += 1
+      end
     end
     self
   end
@@ -25,10 +35,20 @@ module Enumerable
     arr = self if is_a?(Array)
     arr = my_to_a if is_a?(Range) || is_a?(Hash)
 
-    i = 0
-    while i < arr.length
-      yield(arr[i], i)
-      i += 1
+    if is_a?(Hash)
+      hash = self
+      h_keys = keys
+      h = 0
+      while h < h_keys.length
+        yield(keys[h], hash[keys[h]])
+        h += 1
+      end
+    else
+      i = 0
+      while i < arr.length
+        yield(arr[i], i)
+        i += 1
+      end
     end
     self
   end
