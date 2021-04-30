@@ -1,55 +1,17 @@
-require 'pry'
-
 # rubocop: disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/ModuleLength
 
 module Enumerable
   def my_each
     return to_enum(:my_each) unless block_given?
 
-    arr = []
-    arr = self if is_a?(Array)
-    arr = my_to_a if is_a?(Range) || is_a?(Hash)
-
-    if is_a?(Hash)
-      hash = self
-      h_keys = keys
-      h = 0
-      while h < h_keys.length
-        yield(keys[h], hash[keys[h]])
-        h += 1
-      end
-    else
-      i = 0
-      while i < arr.length
-        yield(arr[i])
-        i += 1
-      end
-    end
+    to_a.length.times { |x| yield to_a[x] }
     self
   end
 
   def my_each_with_index
     return to_enum(:my_each_with_index) unless block_given?
 
-    arr = []
-    arr = self if is_a?(Array)
-    arr = my_to_a if is_a?(Range) || is_a?(Hash)
-
-    if is_a?(Hash)
-      hash = self
-      h_keys = keys
-      h = 0
-      while h < h_keys.length
-        yield(keys[h], hash[keys[h]])
-        h += 1
-      end
-    else
-      i = 0
-      while i < arr.length
-        yield(arr[i], i)
-        i += 1
-      end
-    end
+    to_a.length.times { |x| yield to_a[x], x }
     self
   end
 
@@ -175,7 +137,7 @@ end
 def my_to_a()
   conv_arr = []
   conv_arr = to_a if is_a?(Range)
-  conv_arr = flatten if is_a?(Hash)
+  conv_arr = to_a if is_a?(Hash)
   conv_arr
 end
 
