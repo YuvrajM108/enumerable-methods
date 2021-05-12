@@ -22,4 +22,37 @@ describe Enumerable do
       expect(arr.select { |num|  num.even?  }).to eql([2, 4])
     end
   end
+
+# %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
+# %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
+# %w[ant bear cat].all?(/t/)                        #=> false
+# [1, 2i, 3.14].all?(Numeric)                       #=> true
+# [nil, true, 99].all?                              #=> false
+# [].all?                                           #=> true
+
+  describe "#my_all?" do
+    it "prints true if all elements are longer or equal 3" do
+      expect(%w[ant bear cat].my_all? { |word| word.length >= 3 }).to eql(true)
+    end
+
+    it "prints true if all elements are longer or equal 4" do
+      expect(%w[ant bear cat].my_all? { |word| word.length >= 4 }).to eql(false)
+    end
+
+    it "prints true if all element contain /t/" do
+      expect(%w[ant bear cat].my_all?(/t/)).to eql(false)
+    end
+
+    it "prints true if all elements are Numeric" do
+      expect([1, 2i, 3.14].my_all?(Numeric)).to eql(true)
+    end
+
+    it "prints true if all elements have value" do
+      expect([nil, true, 99].my_all?).to eql(false)
+    end
+
+    it "prints true if array have no value" do
+      expect([].my_all?).to eql(true)
+    end
+  end
 end
