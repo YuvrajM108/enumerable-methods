@@ -23,13 +23,6 @@ describe Enumerable do
     end
   end
 
-# %w[ant bear cat].all? { |word| word.length >= 3 } #=> true
-# %w[ant bear cat].all? { |word| word.length >= 4 } #=> false
-# %w[ant bear cat].all?(/t/)                        #=> false
-# [1, 2i, 3.14].all?(Numeric)                       #=> true
-# [nil, true, 99].all?                              #=> false
-# [].all?                                           #=> true
-
   describe "#my_all?" do
     it "prints true if all elements are longer or equal 3" do
       expect(%w[ant bear cat].my_all? { |word| word.length >= 3 }).to eql(true)
@@ -53,6 +46,32 @@ describe Enumerable do
 
     it "prints true if array have no value" do
       expect([].my_all?).to eql(true)
+    end
+  end
+   
+  describe "#my_any?" do
+    it "prints true if any elements are longer or equal 3" do
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 3 }).to eql(true)
+    end
+
+    it "prints true if any elements are longer or equal 4" do
+      expect(%w[ant bear cat].my_any? { |word| word.length >= 4 }).to eql(true)
+    end
+
+    it "prints true if any element contain /d/" do
+      expect(%w[ant bear cat].my_any?(/d/)).to eql(false)
+    end
+
+    it "prints true if any elements are Integer" do
+      expect([1, 2i, 3.14].my_any?(Integer)).to eql(true)
+    end
+
+    it "prints true if any elements have value" do
+      expect([nil, true, 99].my_any?).to eql(true)
+    end
+
+    it "prints false if any array have no value" do
+      expect([].my_any?).to eql(false)
     end
   end
 end
