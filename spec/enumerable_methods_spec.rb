@@ -74,4 +74,47 @@ describe Enumerable do
       expect([].my_any?).to eql(false)
     end
   end
+
+  # %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
+  # %w{ant bear cat}.none? { |word| word.length >= 4 } #=> false
+  # %w{ant bear cat}.none?(/d/)                        #=> true
+  # [1, 3.14, 42].none?(Float)                         #=> false
+  # [].none?                                           #=> true
+  # [nil].none?                                        #=> true
+  # [nil, false].none?                                 #=> true
+  # [nil, false, true].none?                           #=> false
+
+  describe "#my_none?" do
+    it "prints true if no elements have a length of 5" do
+      expect(%w{ant bear cat}.my_none? { |word| word.length == 5 }).to eql(true)
+    end
+
+    it "prints true if no elements have a length of 4 or greater" do
+      expect(%w{ant bear cat}.my_none? { |word| word.length >= 4 }).to eql(false)
+    end
+
+    it "prints true if no element contains /d/" do
+      expect(%w{ant bear cat}.my_none?(/d/)).to eql(true)
+    end
+
+    it "prints true if no elements are Float" do
+      expect([1, 3.14, 42].my_none?(Float)).to eql(false)
+    end
+
+    it "prints true if array has no values" do
+      expect([].my_none?).to eql(true)
+    end
+
+    it "prints true if no elements have a value" do
+      expect([nil].my_none?).to eql(true)
+    end
+
+    it "prints true if all elements are nil or false" do
+      expect([nil, false].my_none?).to eql(true)
+    end
+
+    it "prints true if all elements are nil or false" do
+      expect([nil, false, true].my_none?).to eql(false)
+    end
+  end
 end
