@@ -75,15 +75,6 @@ describe Enumerable do
     end
   end
 
-  # %w{ant bear cat}.none? { |word| word.length == 5 } #=> true
-  # %w{ant bear cat}.none? { |word| word.length >= 4 } #=> false
-  # %w{ant bear cat}.none?(/d/)                        #=> true
-  # [1, 3.14, 42].none?(Float)                         #=> false
-  # [].none?                                           #=> true
-  # [nil].none?                                        #=> true
-  # [nil, false].none?                                 #=> true
-  # [nil, false, true].none?                           #=> false
-
   describe "#my_none?" do
     it "prints true if no elements have a length of 5" do
       expect(%w{ant bear cat}.my_none? { |word| word.length == 5 }).to eql(true)
@@ -115,6 +106,21 @@ describe Enumerable do
 
     it "prints true if all elements are nil or false" do
       expect([nil, false, true].my_none?).to eql(false)
+    end
+  end
+
+  describe "#my_count" do
+    let (:arr) {[1, 2, 4, 2]}
+    it "returns the number of elements in arr" do
+      expect(arr.my_count).to eql(4)
+    end
+
+    it "returns the number of elements in arr with a value of 2" do
+      expect(arr.my_count(2)).to eql(2)
+    end
+
+    it "returns the number of elements divisible by 2" do
+      expect(arr.my_count{ |x| x%2==0 }).to eql(3)
     end
   end
 end
