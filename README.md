@@ -17,6 +17,7 @@ In order to build my own versions of these methods, I used loops, conditional st
 ## Built With
 
 - Ruby
+- Rspec TDD
 
 ## Getting Started
 
@@ -24,8 +25,35 @@ In order to build my own versions of these methods, I used loops, conditional st
 
 - Once you have copied the project to your local machine, open your terminal in the project directory and run the project by typing 'ruby enumerable_methods.rb' into the terminal.
 
+#### Testing With Rspec
+- Test cases have been written carefully to make sure custom enumerable methods works as expected
+- From the Terminal run the command
+```
+$ rspec
+```
+And see all test pass.
+
 ## Author
 
+👤 **Yuvrag Manoo**
 - GitHub: @YuvrajM108
 
+👤 **Daniel Samuel**
+
+- GitHub: [@DanSam5K](https://github.com/DanSam5K)
+- Twitter: [@\_dan_sam](https://twitter.com/_dan_sam)
+- LinkedIn: [DanSam](https://www.linkedin.com/in/dansamuel/)
 - LinkedIn: https://www.linkedin.com/in/yuvraj-manoo-2711a91b0/
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Project inspired by Microverse Program
+
+## 📝 License
+
+This project is [MIT](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) licensed.
+
