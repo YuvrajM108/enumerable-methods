@@ -123,4 +123,32 @@ describe Enumerable do
       expect(arr.my_count{ |x| x%2==0 }).to eql(3)
     end
   end
+
+  describe "#my_map" do
+    it "returns each element in range squared" do
+      expect((1..4).my_map { |i| i*i }).to eql([1, 4, 9, 16])
+    end
+  end
+
+#   (5..10).inject { |sum, n| sum + n }            #=> 45
+#   (5..10).inject(1) { |product, n| product * n } #=> 151200
+#   longest = %w{ cat sheep bear }.inject do |memo, word|
+#     memo.length > word.length ? memo : word
+#   end
+
+  describe "#my_inject" do
+    it "returns sum of range of values from 5 to 10" do
+      expect((5..10).my_inject { |sum, n| sum + n }).to eql(45)
+    end
+    
+    it "returns product of range of values from 5 to 10" do
+      expect((5..10).my_inject(1) { |product, n| product * n }).to eql(151200)
+    end
+
+    it "returns product of range of values from 5 to 10" do
+      expect(%w{ cat sheep bear }.inject do |memo, word|
+        memo.length > word.length ? memo : word
+        end).to eql("sheep")
+    end
+  end
 end
