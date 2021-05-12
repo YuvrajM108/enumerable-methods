@@ -41,7 +41,7 @@ And see all test pass.
 👤 **Daniel Samuel**
 
 - GitHub: [@DanSam5K](https://github.com/DanSam5K)
-- Twitter: [@\_dan_sam](https://twitter.com/_dan_sam)
+- Twitter: [@_dan_sam](https://twitter.com/_dan_sam)
 - LinkedIn: [DanSam](https://www.linkedin.com/in/dansamuel/)
 - LinkedIn: https://www.linkedin.com/in/yuvraj-manoo-2711a91b0/
 
