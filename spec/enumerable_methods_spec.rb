@@ -27,7 +27,7 @@ describe Enumerable do
     end
 
     it 'return the enumerator if no block given' do
-      expect(%w[cat dog wombat].each_with_index).to be_an Enumerator  
+      expect(%w[cat dog wombat].each_with_index).to be_an Enumerator
     end
 
     it 'prints every element with the index of the element' do
@@ -38,7 +38,7 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    let (:arr) {[1, 2, 3, 4, 5]}
+    let(:arr) { [1, 2, 3, 4, 5] }
     it 'prints every element which are even' do
       expect(arr.my_select(&:even?)).to eql([2, 4])
     end
