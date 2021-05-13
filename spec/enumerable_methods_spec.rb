@@ -6,6 +6,12 @@ describe Enumerable do
       arr = [1, 2, 3]
       expect(arr.my_each { |x| puts x, '--' }).to eql(arr)
     end
+
+    it 'return the enumerator if no block given' do
+      arr = [1, 2, 3]
+      expect(arr.my_each).to be_an Enumerator
+      
+    end
   end
 
   describe '#my_each_with_index' do
