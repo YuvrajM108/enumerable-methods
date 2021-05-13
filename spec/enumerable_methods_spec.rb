@@ -10,7 +10,6 @@ describe Enumerable do
     it 'return the enumerator if no block given' do
       arr = [1, 2, 3]
       expect(arr.my_each).to be_an Enumerator
-      
     end
   end
 
@@ -20,6 +19,10 @@ describe Enumerable do
       expect(%w[cat dog wombat].each_with_index do |item, index|
                hash[item] = index
              end).to eql(%w[cat dog wombat])
+    end
+
+    it 'return the enumerator if no block given' do
+      expect(%w[cat dog wombat].each_with_index).to be_an Enumerator  
     end
   end
 
