@@ -27,9 +27,13 @@ describe Enumerable do
   end
 
   describe '#my_select' do
-    it 'prints every element with the index of the element' do
-      arr = [1, 2, 3, 4, 5]
-      expect(arr.select(&:even?)).to eql([2, 4])
+    let (:arr) {[1, 2, 3, 4, 5]}
+    it 'prints every element which are even' do
+      expect(arr.my_select(&:even?)).to eql([2, 4])
+    end
+
+    it 'prints every element which are even' do
+      expect(arr.my_select(&:even?)).not_to eql([1, 3, 5])
     end
   end
 
@@ -153,6 +157,12 @@ describe Enumerable do
       expect(%w[cat sheep bear].inject do |memo, word|
                memo.length > word.length ? memo : word
              end).to eql('sheep')
+    end
+
+    it 'returns product of range of values from 5 to 10' do
+      expect(%w[cat sheep bear].inject do |memo, word|
+               memo.length > word.length ? memo : word
+             end).not_to eql('cat')
     end
   end
 end
