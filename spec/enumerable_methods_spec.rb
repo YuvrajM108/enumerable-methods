@@ -11,6 +11,11 @@ describe Enumerable do
       arr = [1, 2, 3]
       expect(arr.my_each).to be_an Enumerator
     end
+
+    it 'prints every element in an array' do
+      arr = [1, 2, 3]
+      expect(arr.my_each { |x| puts x, '--' }).not_to be_a Hash
+    end
   end
 
   describe '#my_each_with_index' do
@@ -23,6 +28,12 @@ describe Enumerable do
 
     it 'return the enumerator if no block given' do
       expect(%w[cat dog wombat].each_with_index).to be_an Enumerator  
+    end
+
+    it 'prints every element with the index of the element' do
+      expect(%w[cat dog wombat].my_each_with_index do |item, index|
+               hash[item] = index
+             end).not_to be_a Hash
     end
   end
 
