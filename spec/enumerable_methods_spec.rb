@@ -12,7 +12,7 @@ describe Enumerable do
       expect(arr.my_each).to be_an Enumerator
     end
 
-    it 'prints every element in an array' do
+    it 'prints every element in an array and not a HASH' do
       arr = [1, 2, 3]
       expect(arr.my_each { |x| puts x, '--' }).not_to be_a Hash
     end
@@ -30,7 +30,7 @@ describe Enumerable do
       expect(%w[cat dog wombat].each_with_index).to be_an Enumerator
     end
 
-    it 'prints every element with the index of the element' do
+    it 'prints every element with the index of the element and not a HASH' do
       expect(%w[cat dog wombat].my_each_with_index do |item, index|
                hash[item] = index
              end).not_to be_a Hash
@@ -43,7 +43,7 @@ describe Enumerable do
       expect(arr.my_select(&:even?)).to eql([2, 4])
     end
 
-    it 'prints every element which are even' do
+    it 'prints every even element and not odd element' do
       expect(arr.my_select(&:even?)).not_to eql([1, 3, 5])
     end
   end
@@ -164,13 +164,13 @@ describe Enumerable do
       expect((5..10).my_inject(1) { |product, n| product * n }).to eql(151_200)
     end
 
-    it 'returns product of range of values from 5 to 10' do
+    it 'returns word with length ranging from 5 to 10' do
       expect(%w[cat sheep bear].inject do |memo, word|
                memo.length > word.length ? memo : word
              end).to eql('sheep')
     end
 
-    it 'returns product of range of values from 5 to 10' do
+    it 'returns word with length from 5 to 10 and not under or over the specified range' do
       expect(%w[cat sheep bear].inject do |memo, word|
                memo.length > word.length ? memo : word
              end).not_to eql('cat')
